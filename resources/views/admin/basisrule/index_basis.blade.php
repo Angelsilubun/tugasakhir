@@ -7,7 +7,7 @@
 
     <main id="main" class="main">
         <div class="pagetitle">
-            <h1 class="mb-2">Basis Aturan</h1>
+            <h1 class="mb-2">Basis Rules</h1>
 
             @if (session('success'))
                 <script>
