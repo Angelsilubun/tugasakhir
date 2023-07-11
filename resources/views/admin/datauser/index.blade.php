@@ -45,59 +45,67 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="d-grid gap-2 d-md-flex justify-content-md mt-3 mb-3">
+                                <div
+                                    class="d-grid gap-2 d-md-flex justify-content-md-start justify-content-start mt-3 mb-3">
                                     <button class="btn btn-success btn-sm" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#tambah_pakar"><i class="bi bi-plus-circle"></i> Tambah</button>
+                                        data-bs-target="#tambah_pakar">
+                                        <i class="bi bi-plus-circle"></i> Tambah
+                                    </button>
                                 </div>
 
                                 <!-- Default Table -->
-                                <table class="table mt-4 table-hover align-middle" id="dataTable">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th scope="col">No</th>
-                                            <th scope="col">Nama</th>
-                                            <th scope="col">Email</th>
-                                            <th scope="col">Role</th>
-                                            <th scope="col">Gambar</th>
-                                            <th scope="col">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($user as $pak => $pakar)
+                                <div class="table-responsive">
+                                    <table class="table mt-4 table-hover align-middle" id="dataTable">
+                                        <thead class="table-light">
                                             <tr>
-                                                <th scope="row">{{ $loop->iteration }}</th>
-                                                <td>{{ $pakar->name }}</td>
-                                                <td>{{ $pakar->email }}</td>
-                                                <td>{{ $pakar->role }}</td>
-                                                <td>
-                                                    @if ($pakar->image)
-                                                        {{-- <img src="{{ asset('/storage/' . $pakar->image) }}"
-                                                            style="width: 80px"> --}}
-                                                        <img src="{{ Storage::url($pakar->image) }}"
-                                                            alt="{{ $pakar->id }}" width="75" class="rounded">
-                                                    @else
-                                                        No image available
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <form onsubmit="return confirm('Apakah anda yakin?');"
-                                                        action="{{ route('datauser.destroy', $pakar->id) }}" method="POST">
-                                                        <button type="button" class="btn btn-primary text-light btn-sm"
-                                                            data-bs-toggle="modal" href="#edit_pakar{{ $pakar->id }}">
-                                                            <i class="bi bi-pencil-square"></i>
-                                                        </button>
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <input type="hidden" name="gambarLama" value="{{ $pakar->image }}">
-                                                        <button type="submit" class="btn btn-danger text-light btn-sm">
-                                                            <i class="bi bi-trash3-fill"></i>
-                                                        </button>
-                                                    </form>
-                                                </td>
+                                                <th scope="col">No</th>
+                                                <th scope="col">Nama</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Role</th>
+                                                <th scope="col">Gambar</th>
+                                                <th scope="col">Action</th>
                                             </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($user as $pak => $pakar)
+                                                <tr>
+                                                    <th scope="row">{{ $loop->iteration }}</th>
+                                                    <td>{{ $pakar->name }}</td>
+                                                    <td>{{ $pakar->email }}</td>
+                                                    <td>{{ $pakar->role }}</td>
+                                                    <td>
+                                                        @if ($pakar->image)
+                                                            {{-- <img src="{{ asset('/storage/' . $pakar->image) }}"
+                                                                style="width: 80px"> --}}
+                                                            <img src="{{ Storage::url($pakar->image) }}"
+                                                                alt="{{ $pakar->id }}" width="75" class="rounded">
+                                                        @else
+                                                            No image available
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <form onsubmit="return confirm('Apakah anda yakin?');"
+                                                            action="{{ route('datauser.destroy', $pakar->id) }}"
+                                                            method="POST">
+                                                            <button type="button" class="btn btn-primary text-light btn-sm"
+                                                                data-bs-toggle="modal"
+                                                                href="#edit_pakar{{ $pakar->id }}">
+                                                                <i class="bi bi-pencil-square"></i>
+                                                            </button>
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <input type="hidden" name="gambarLama"
+                                                                value="{{ $pakar->image }}">
+                                                            <button type="submit" class="btn btn-danger text-light btn-sm">
+                                                                <i class="bi bi-trash3-fill"></i>
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -183,6 +191,7 @@
         $(document).ready(function() {
             $('#dataTable').DataTable({
                 "lengthMenu": [5, 10, 25, 50] // Menampilkan opsi untuk menampilkan 5, 10, 25, atau 50 data
+
             });
         });
     </script>

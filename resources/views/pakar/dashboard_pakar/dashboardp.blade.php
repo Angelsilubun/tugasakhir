@@ -1,4 +1,4 @@
-@extends('layouts_admin.main')
+@extends('layouts_pakar.main')
 
 @section('title', 'Dashboard Pakar')
 

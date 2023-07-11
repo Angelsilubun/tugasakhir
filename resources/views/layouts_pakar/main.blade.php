@@ -82,9 +82,9 @@
 
     @stack('style')
 
-    @include('layouts_admin.header')
+    {{-- @include('layouts_admin.header') --}}
 
-    {{-- @include('layouts_pakar.header') --}}
+    @include('layouts_pakar.header')
 
     @include('layouts_admin.sidebar')
 

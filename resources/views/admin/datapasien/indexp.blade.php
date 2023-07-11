@@ -45,54 +45,59 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="d-grid gap-2 d-md-flex justify-content-md mt-3 mb-3">
+                                <div
+                                    class="d-grid gap-2 d-md-flex justify-content-md-start justify-content-start mt-3 mb-3">
                                     <button class="btn btn-success btn-sm" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#tambah_pasien"><i class="bi bi-plus-circle"></i> Tambah</button>
+                                        data-bs-target="#tambah_pasien">
+                                        <i class="bi bi-plus-circle"></i> Tambah
+                                    </button>
                                 </div>
 
                                 <!-- Default Table -->
-                                <table class="table mt-4 table-hover align-middle" id="dataTable">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th scope="col">No</th>
-                                            <th scope="col">Nama Lengkap</th>
-                                            <th scope="col">Email</th>
-                                            <th scope="col">Jenis Kelamin</th>
-                                            <th scope="col">Umur</th>
-                                            <th scope="col">Alamat</th>
-                                            {{-- <th scope="col">Role</th> --}}
-                                            <th scope="col">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($user as $pas => $pasien)
+                                <div class="table-responsive">
+                                    <table class="table mt-4 table-hover align-middle" id="dataTable">
+                                        <thead class="table-light">
                                             <tr>
-                                                <th scope="row">{{ $loop->iteration }}</th>
-                                                <td>{{ $pasien->name }}</td>
-                                                <td>{{ $pasien->email }}</td>
-                                                <td>{{ $pasien->jenis_kelamin }}</td>
-                                                <td>{{ $pasien->umur }}</td>
-                                                <td>{{ $pasien->alamat }}</td>
-                                                {{-- <td>{{ $pasien->role }}</td> --}}
-                                                <td>
-                                                    <form onsubmit="return confirm('Apakah anda yakin?');"
-                                                        action="{{ route('datapasien.destroy', $pasien->id) }}"
-                                                        method="POST">
-                                                        <button type="button" class="btn btn-primary text-light btn-sm"
-                                                            data-bs-toggle="modal" href="#edit_pasien{{ $pasien->id }}">
-                                                            <i class="bi bi-pencil-square"></i>
-                                                        </button>
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger text-light btn-sm">
-                                                            <i class="bi bi-trash3-fill"></i>
-                                                        </button>
-                                                    </form>
-                                                </td>
+                                                <th scope="col">No</th>
+                                                <th scope="col">Nama Lengkap</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Jenis Kelamin</th>
+                                                <th scope="col">Umur</th>
+                                                <th scope="col">Alamat</th>
+                                                {{-- <th scope="col">Role</th> --}}
+                                                <th scope="col">Action</th>
                                             </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($user as $pas => $pasien)
+                                                <tr>
+                                                    <th scope="row">{{ $loop->iteration }}</th>
+                                                    <td>{{ $pasien->name }}</td>
+                                                    <td>{{ $pasien->email }}</td>
+                                                    <td>{{ $pasien->jenis_kelamin }}</td>
+                                                    <td>{{ $pasien->umur }}</td>
+                                                    <td>{{ $pasien->alamat }}</td>
+                                                    {{-- <td>{{ $pasien->role }}</td> --}}
+                                                    <td>
+                                                        <form onsubmit="return confirm('Apakah anda yakin?');"
+                                                            action="{{ route('datapasien.destroy', $pasien->id) }}"
+                                                            method="POST">
+                                                            <button type="button" class="btn btn-primary text-light btn-sm"
+                                                                data-bs-toggle="modal" href="#edit_pasien{{ $pasien->id }}">
+                                                                <i class="bi bi-pencil-square"></i>
+                                                            </button>
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger text-light btn-sm">
+                                                                <i class="bi bi-trash3-fill"></i>
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
 
                         </div>

@@ -52,9 +52,12 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="d-grid gap-2 d-md-flex justify-content-md mt-3 mb-3">
+                                <div
+                                    class="d-grid gap-2 d-md-flex justify-content-md-start justify-content-start mt-3 mb-3">
                                     <button class="btn btn-success btn-sm" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#tambah_basis"><i class="bi bi-plus-circle"></i> Tambah</button>
+                                        data-bs-target="#tambah_basis">
+                                        <i class="bi bi-plus-circle"></i> Tambah
+                                    </button>
                                 </div>
 
                                 <!-- Default Table -->

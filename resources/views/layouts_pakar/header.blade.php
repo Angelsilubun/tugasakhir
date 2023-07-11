@@ -1,8 +1,7 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
-            <img src="assets/img/logo.png" alt="">
+        <a href="{{ route('pakar.dashboard_pakar') }}" class="logo d-flex align-items-center">
             <span class="d-none d-lg-block">SistemPakar</span>
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -27,6 +26,12 @@
             <li class="nav-item dropdown pe-3">
 
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                    @if (empty(Auth::user()->image))
+                        <img src="{{ url('assets/admin/img/upload/noimage.jpg') }}" class="rounded-circle">
+                    @else
+                        <img src="{{ Storage::url(Auth::user()->image) }}" alt="Profile"
+                            class="rounded mx-auto d-block">
+                    @endif
                     <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->name }}</span>
                 </a><!-- End Profile Iamge Icon -->
 
@@ -45,9 +50,9 @@
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="/pakar/profilep">
+                        <a class="dropdown-item d-flex align-items-center" href="{{ route('profilep.index') }}">
                             <i class="bi bi-person"></i>
-                            <span>My Profile</span>
+                            <span>Profile Saya</span>
                         </a>
                     </li>
 

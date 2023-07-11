@@ -45,59 +45,65 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="d-grid gap-2 d-md-flex justify-content-md mt-3 mb-3">
+                                <div
+                                    class="d-grid gap-2 d-md-flex justify-content-md-start justify-content-start mt-3 mb-3">
                                     <button class="btn btn-success btn-sm" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#tambah_admin"><i class="bi bi-plus-circle"></i> Tambah</button>
+                                        data-bs-target="#tambah_admin">
+                                        <i class="bi bi-plus-circle"></i> Tambah
+                                    </button>
                                 </div>
+                                  
 
                                 <!-- Default Table -->
-                                <table class="table mt-4 table-hover align-middle" id="dataTable">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th scope="col">No</th>
-                                            <th scope="col">Nama</th>
-                                            <th scope="col">Email</th>
-                                            <th scope="col">Role</th>
-                                            <th scope="col">Gambar</th>
-                                            <th scope="col">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($user as $ad => $admin)
+                                <div class="table-responsive">
+                                    <table class="table mt-4 table-hover align-middle" id="dataTable">
+                                        <thead class="table-light">
                                             <tr>
-                                                <th scope="row">{{ $loop->iteration }}</th>
-                                                <td>{{ $admin->name }}</td>
-                                                <td>{{ $admin->email }}</td>
-                                                <td>{{ $admin->role }}</td>
-                                                <td>
-                                                    @if ($admin->image)
-                                                        <img src="{{ Storage::url($admin->image) }}"
-                                                            alt="{{ $admin->id }}" width="75" class="rounded">
-                                                    @else
-                                                        No image available.
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <form onsubmit="return confirm('Apakah anda yakin?');"
-                                                        action="{{ route('dataadmin.destroy', $admin->id) }}"
-                                                        method="POST">
-                                                        <button type="button" class="btn btn-primary text-light btn-sm"
-                                                            data-bs-toggle="modal" href="#edit_admin{{ $admin->id }}">
-                                                            <i class="bi bi-pencil-square"></i>
-                                                        </button>
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <input type="hidden" name="gambarLama"
-                                                            value="{{ $admin->image }}">
-                                                        <button type="submit" class="btn btn-danger text-light btn-sm">
-                                                            <i class="bi bi-trash3-fill"></i>
-                                                        </button>
-                                                    </form>
-                                                </td>
+                                                <th scope="col">No</th>
+                                                <th scope="col">Nama</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Role</th>
+                                                <th scope="col">Gambar</th>
+                                                <th scope="col">Action</th>
                                             </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($user as $ad => $admin)
+                                                <tr>
+                                                    <th scope="row">{{ $loop->iteration }}</th>
+                                                    <td>{{ $admin->name }}</td>
+                                                    <td>{{ $admin->email }}</td>
+                                                    <td>{{ $admin->role }}</td>
+                                                    <td>
+                                                        @if ($admin->image)
+                                                            <img src="{{ Storage::url($admin->image) }}"
+                                                                alt="{{ $admin->id }}" width="75" class="rounded">
+                                                        @else
+                                                            No image available.
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <form onsubmit="return confirm('Apakah anda yakin?');"
+                                                            action="{{ route('dataadmin.destroy', $admin->id) }}"
+                                                            method="POST">
+                                                            <button type="button" class="btn btn-primary text-light btn-sm"
+                                                                data-bs-toggle="modal" href="#edit_admin{{ $admin->id }}">
+                                                                <i class="bi bi-pencil-square"></i>
+                                                            </button>
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <input type="hidden" name="gambarLama"
+                                                                value="{{ $admin->image }}">
+                                                            <button type="submit" class="btn btn-danger text-light btn-sm">
+                                                                <i class="bi bi-trash3-fill"></i>
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
 
                         </div>

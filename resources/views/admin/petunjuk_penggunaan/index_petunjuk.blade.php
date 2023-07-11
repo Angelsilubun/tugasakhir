@@ -45,61 +45,66 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="d-grid gap-2 d-md-flex justify-content-md mt-3 mb-3">
+                                <div
+                                    class="d-grid gap-2 d-md-flex justify-content-md-start justify-content-start mt-3 mb-3">
                                     <button class="btn btn-success btn-sm" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#tambah_tentang"><i class="bi bi-plus-circle"></i> Tambah</button>
+                                        data-bs-target="#tambah_tentang">
+                                        <i class="bi bi-plus-circle"></i> Tambah
+                                    </button>
                                 </div>
 
                                 <!-- Default Table -->
-                                <table class="table mt-3 table-hover align-middle" id="dataTable">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th scope="col" class="text-nowrap">No</th>
-                                            <th scope="col" class="text-nowrap">Judul Petunjuk</th>
-                                            <th scope="col" class="text-nowrap">Isi</th>
-                                            <th scope="col" class="text-nowrap">Gambar</th>
-                                            <th scope="col" class="text-nowrap">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($data_petunjuk as $data => $petunjuk)
+                                <div class="table-responsive">
+                                    <table class="table mt-3 table-hover align-middle" id="dataTable">
+                                        <thead class="table-light">
                                             <tr>
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $petunjuk->judul_petunjuk }}</td>
-                                                <td>{!! \Illuminate\Support\Str::limit($petunjuk->isi, 75) !!}</td>
-                                                <td>
-                                                    <img src="{{ Storage::url($petunjuk->image) }}"
-                                                        alt="{{ $petunjuk->id }}" width="50" class="rounded">
-                                                </td>
-                                                <td>
-                                                    <div class="btn-group d-flex btn-group-sm">
-                                                        <button type="button" class="btn text-light btn-sm mx-1" style="background-color: #009999"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#showModal{{ $petunjuk->id }}">
-                                                            <i class="bi bi-eye"></i>
-                                                        </button>
-                                                        <button type="button"
-                                                            class="btn btn-primary text-light btn-sm mx-1"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#editModal{{ $petunjuk->id }}">
-                                                            <i class="bi bi-pencil-square"></i>
-                                                        </button>
-                                                        <form onsubmit="return confirm('Apakah anda yakin?');"
-                                                            action="{{ route('petunjuk_penggunaan.destroy', $petunjuk->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit"
-                                                                class="btn btn-danger text-light btn-sm mx-1">
-                                                                <i class="bi bi-trash3-fill"></i>
-                                                            </button>
-                                                        </form>
-                                                    </div>
-                                                </td>
+                                                <th scope="col" class="text-nowrap">No</th>
+                                                <th scope="col" class="text-nowrap">Judul Petunjuk</th>
+                                                <th scope="col" class="text-nowrap">Isi</th>
+                                                <th scope="col" class="text-nowrap">Gambar</th>
+                                                <th scope="col" class="text-nowrap">Action</th>
                                             </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($data_petunjuk as $data => $petunjuk)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $petunjuk->judul_petunjuk }}</td>
+                                                    <td>{!! \Illuminate\Support\Str::limit($petunjuk->isi, 75) !!}</td>
+                                                    <td>
+                                                        <img src="{{ Storage::url($petunjuk->image) }}"
+                                                            alt="{{ $petunjuk->id }}" width="50" class="rounded">
+                                                    </td>
+                                                    <td>
+                                                        <div class="btn-group d-flex btn-group-sm">
+                                                            <button type="button" class="btn text-light btn-sm mx-1" style="background-color: #009999"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#showModal{{ $petunjuk->id }}">
+                                                                <i class="bi bi-eye"></i>
+                                                            </button>
+                                                            <button type="button"
+                                                                class="btn btn-primary text-light btn-sm mx-1"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#editModal{{ $petunjuk->id }}">
+                                                                <i class="bi bi-pencil-square"></i>
+                                                            </button>
+                                                            <form onsubmit="return confirm('Apakah anda yakin?');"
+                                                                action="{{ route('petunjuk_penggunaan.destroy', $petunjuk->id) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit"
+                                                                    class="btn btn-danger text-light btn-sm mx-1">
+                                                                    <i class="bi bi-trash3-fill"></i>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
 
                                 {{-- {!! $data_tentang->withQueryString()->links('pagination::bootstrap-5') !!} --}}
                             </div>

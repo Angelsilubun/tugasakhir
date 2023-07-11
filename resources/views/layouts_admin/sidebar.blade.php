@@ -23,28 +23,34 @@
         </li>
 
         @if (Auth::user()->role == 'admin')
-            <li class="nav-item">
-                <a class="nav-link {{ Request::routeIs(['admin.datapasien', 'admin.dataadmin', 'admin.datauser']) ? '' : 'collapsed' }}" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+            <li class="nav-item ">
+                <a class="nav-link {{ Request::routeIs(['datapasien*.index', 'datauser*.index', 'dataadmin*.index']) ? '' : 'collapsed' }}"
+                    data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-journal-text"></i><span>Data Master</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <ul id="forms-nav"
+                    class="@if (Request::routeIs(['datapasien*.index', 'datauser*.index', 'dataadmin*.index']) ? '' : 'collapsed') nav-content collapse @else nav-content @endif"
+                    data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="{{ route('datapasien.index') }}">
+                        <a href="{{ route('datapasien.index') }}"
+                            class="nav-link {{ Request::routeIs(['datapasien.index']) ? 'active' : 'collapsed' }}">
                             <i class="bi bi-circle"></i><span>Data Pasien</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('datauser.index') }}">
+                        <a href="{{ route('datauser.index') }}"
+                            class="nav-link {{ Request::routeIs(['datauser*.index']) ? 'active' : 'collapsed' }}">
                             <i class="bi bi-circle"></i><span>Data Pakar</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('dataadmin.index') }}">
+                        <a href="{{ route('dataadmin.index') }}"
+                            class="nav-link {{ Request::routeIs(['dataadmin*.index']) ? 'active' : 'collapsed' }}">
                             <i class="bi bi-circle"></i><span>Data Admin</span>
                         </a>
                     </li>
                 </ul>
-            </li><!-- End Data User Nav -->
+            </li>
         @endif
 
         @if (Auth::user()->role == 'pakar')
