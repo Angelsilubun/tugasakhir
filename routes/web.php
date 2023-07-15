@@ -38,14 +38,15 @@ Route::get('/petunjuk', [LandingpageController::class, 'index'])->name('landingP
 // Route::resource('/tentang', LandingpageController::class);
 
 Route::resource('diagnosa', DiagnosaController::class)->only([
-    'index', 'store', 'show'
+    'index', 'store', 'show',
 ])->middleware('auth');
 
 Route::get('hasil-dianogsa/print/{id}', [DiagnosaController::class, 'showPrintDiagnosa'])->name('diagnosa.showPrintDiagnosa');
 
 Route::resource('riwayat_diagnosa', RiwayatDiagnosaController::class)->only([
-    'index'
+    'index', 'destroy'
 ]);
+
 Route::get('riwayat_diagnosa/landingpage', [RiwayatDiagnosaController::class, 'indexDiagnosaLandingPage'])->name('riwayat_diagnosa.indexDiagnosaLandingPage')->middleware('auth');
 Route::get('/get-top-penyakit', [DiagnosaController::class, 'getTopPenyakit']);
 Route::get('/get-total-users', [DiagnosaController::class, 'getTotalUsers']);

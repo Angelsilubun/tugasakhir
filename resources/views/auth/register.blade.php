@@ -93,7 +93,7 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="mb-3 row">
+                                        {{-- <div class="mb-3 row">
                                             <label for="alamat"
                                                 class="col-sm-4 col-form-label">{{ __('Password') }}</label>
                                             <div class="col-sm-8">
@@ -108,8 +108,29 @@
                                                     </span>
                                                 @enderror
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="mb-3 row">
+                                            <label for="password"
+                                                class="col-sm-4 col-form-label">{{ __('Password') }}</label>
+                                            <div class="col-sm-8">
+                                                <div class="input-group">
+                                                    <input id="password" type="password"
+                                                        class="form-control @error('password') is-invalid @enderror"
+                                                        name="password" required autocomplete="current-password">
+                                                    <button type="button" id="togglePassword"
+                                                        class="btn btn-outline-secondary">
+                                                        <i id="toggleIcon" class="bi bi-eye-slash"></i>
+                                                    </button>
+                                                </div>
+                                                @error('password')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        {{-- <div class="mb-3 row">
                                             <label for="alamat"
                                                 class="col-sm-4 col-form-label">{{ __('Confirm') }}</label>
                                             <div class="col-sm-8">
@@ -118,7 +139,23 @@
                                                     class="form-control @error('password') is-invalid @enderror"
                                                     name="password_confirmation" required autocomplete="new-password">
                                             </div>
+                                        </div> --}}
+                                        <div class="mb-3 row">
+                                            <label for="password-confirm"
+                                                class="col-sm-4 col-form-label">{{ __('Confirm') }}</label>
+                                            <div class="col-sm-8">
+                                                <div class="input-group">
+                                                    <input id="password-confirm" type="password"
+                                                        class="form-control @error('password') is-invalid @enderror"
+                                                        name="password_confirmation" required autocomplete="new-password">
+                                                    <button type="button" id="toggleConfirmPassword"
+                                                        class="btn btn-outline-secondary">
+                                                        <i id="toggleConfirmIcon" class="bi bi-eye-slash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
+
                                         <div class="row mb-0">
                                             <div class="d-grid gap-2 mt-3">
                                                 <button type="submit" class="btn"
@@ -143,6 +180,31 @@
             </div>
         </section>
     </main>
+
+    @push('js')
+        <script>
+            const togglePassword = document.querySelector('#togglePassword');
+            const password = document.querySelector('#password');
+
+            togglePassword.addEventListener('click', function() {
+                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                password.setAttribute('type', type);
+                togglePassword.querySelector('#toggleIcon').classList.toggle('bi-eye');
+                togglePassword.querySelector('#toggleIcon').classList.toggle('bi-eye-slash');
+            });
+        </script>
+        <script>
+            const toggleConfirmPassword = document.querySelector('#toggleConfirmPassword');
+            const confirmPassword = document.querySelector('#password-confirm');
+
+            toggleConfirmPassword.addEventListener('click', function() {
+                const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+                confirmPassword.setAttribute('type', type);
+                toggleConfirmPassword.querySelector('#toggleConfirmIcon').classList.toggle('bi-eye');
+                toggleConfirmPassword.querySelector('#toggleConfirmIcon').classList.toggle('bi-eye-slash');
+            });
+        </script>
+    @endpush
 @endsection
 {{-- <div class="card-body">
     <form method="POST" action="{{ route('register') }}">

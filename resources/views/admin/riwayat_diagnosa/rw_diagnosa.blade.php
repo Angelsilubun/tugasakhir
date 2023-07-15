@@ -64,18 +64,31 @@
                                                                 <i class="bi bi-eye"></i> Lihat Hasil Diagnosa
                                                             </a>
                                                         </div> --}}
-                                                        <div class="d-grid gap-2 d-md-block" role="group"
+                                                        <div class="btn-group d-flex" role="group"
                                                             aria-label="Action buttons">
-                                                            <a class="btn btn-primary btn-sm"
-                                                                href="{{ route('diagnosa.showPrintDiagnosa', $diagnosa->id) }}"
-                                                                role="button">
-                                                                <i class="bi bi-printer-fill"></i> Print
-                                                            </a>
-                                                            <a class="btn text-light btn-sm" style="background-color: #009999"
-                                                                href="{{ route('diagnosa.show', Crypt::encryptString($diagnosa->id)) }}"
-                                                                role="button">
-                                                                <i class="bi bi-eye"></i> Lihat Hasil Diagnosa
-                                                            </a>
+                                                            <form onsubmit="return confirm('Apakah anda yakin?');"
+                                                                action="{{ route('riwayat_diagnosa.destroy', $diagnosa->id) }}"
+                                                                method="POST">
+                                                                @if (Auth::user()->role == 'admin')
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit"
+                                                                        class="btn btn-danger text-light btn-sm">
+                                                                        <i class="bi bi-trash3-fill"></i>
+                                                                    </button>
+                                                                @endif
+                                                                <a class="btn btn-primary btn-sm"
+                                                                    href="{{ route('diagnosa.showPrintDiagnosa', $diagnosa->id) }}"
+                                                                    role="button">
+                                                                    <i class="bi bi-printer-fill"></i>
+                                                                </a>
+                                                                <a class="btn text-light btn-sm"
+                                                                    style="background-color: #009999"
+                                                                    href="{{ route('diagnosa.show', Crypt::encryptString($diagnosa->id)) }}"
+                                                                    role="button">
+                                                                    <i class="bi bi-eye"></i>
+                                                                </a>
+                                                            </form>
                                                         </div>
                                                     </td>
                                                 </tr>

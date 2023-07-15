@@ -23,6 +23,18 @@ class RiwayatDiagnosaController extends Controller
         return view('admin.riwayat_diagnosa.rw_diagnosa
         ', compact('gejalas', 'penyakits', 'rules', 'riwayatDiagnosa'));
     }
+    public function destroy($id)
+{
+    $riwayatDiagnosa = Diagnosa::find($id);
+
+    if ($riwayatDiagnosa) {
+        $riwayatDiagnosa->delete();
+        return redirect()->route('riwayat_diagnosa.index')->with('success', 'Riwayat diagnosa berhasil dihapus.');
+    } else {
+        return redirect()->route('riwayat_diagnosa.index')->with('error', 'Riwayat diagnosa tidak ditemukan.');
+    }
+}
+
     public function indexDiagnosaLandingPage()
     {
         $gejalas = Gejala::get();

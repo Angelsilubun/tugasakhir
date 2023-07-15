@@ -56,88 +56,67 @@ class DiagnosaController extends Controller
         }
     }
 
-
-    // public function show($encryptId)
-    // {
-    //     $id = Crypt::decryptString($encryptId);
-
-    //     $diagnosa = Diagnosa::with(['user', 'penyakits'])->findOrFail($id);
-    //     $gejalaIds = explode(',', $diagnosa->gejala_diagnosa);
-    //     $gejalas = Gejala::whereIn('id', $gejalaIds)->get();
-    //     $penyakits = Penyakit::all();
-    //     $rules = Rule::with(['gejalaDiagnosa', 'penyakit'])->get();
-    //     $post_penyakit = LandingPagePostPenyakit::get();
-
-    //     return view('user.diagnosa.hasil_diagnosa', compact('diagnosa', 'gejalas', 'penyakits', 'rules', 'post_penyakit'));
-    // }
-
     public function show($encryptId)
-{
-    $id = Crypt::decryptString($encryptId);
+    {
+        $id = Crypt::decryptString($encryptId);
 
-    $diagnosa = Diagnosa::with(['user', 'penyakits'])->findOrFail($id);
-    $gejalaIds = explode(',', $diagnosa->gejala_diagnosa);
-    $gejalas = Gejala::whereIn('id', $gejalaIds)->get();
-    $penyakits = Penyakit::all();
-    $rules = Rule::with(['gejalaDiagnosa', 'penyakit'])->get();
-    $post_penyakit = LandingPagePostPenyakit::get();
+        $diagnosa = Diagnosa::with(['user', 'penyakits'])->findOrFail($id);
+        $gejalaIds = explode(',', $diagnosa->gejala_diagnosa);
+        $gejalas = Gejala::whereIn('id', $gejalaIds)->get();
+        $penyakits = Penyakit::all();
+        $rules = Rule::with(['gejalaDiagnosa', 'penyakit'])->get();
+        $post_penyakit = LandingPagePostPenyakit::get();
 
-    $matchedRule = null;
-    $gejalaDiagnosaArr = explode(',', $diagnosa->gejala_diagnosa);
-    $gejalaValid = true;
-    $totalSymptoms = count($gejalaDiagnosaArr);
+        $matchedRule = null;
+        $gejalaDiagnosaArr = explode(',', $diagnosa->gejala_diagnosa);
+        $gejalaValid = true;
+        $totalSymptoms = count($gejalaDiagnosaArr);
 
-    // Memeriksa keberadaan semua gejala dalam gejala_diagnosa dalam daftar gejala yang valid
-    foreach ($gejalaDiagnosaArr as $gejala) {
-        if (!$gejalas->contains('id', $gejala)) {
-            $gejalaValid = false;
-            break;
-        }
-    }
-
-    if ($gejalaValid) {
-        $bestMatchCount = 0; // Menyimpan jumlah gejala yang cocok terbanyak
-        $bestMatchRule = null; // Menyimpan rule dengan kecocokan terbaik
-        $bestMatchDiff = PHP_INT_MAX; // Menyimpan selisih terkecil dengan rule
-        $closestRule = null; // Menyimpan rule dengan selisih terkecil
-
-        foreach ($rules as $rule) {
-            $daftarGejalaArr = explode(',', $rule['daftar_gejala']);
-            $matchedSymptoms = array_intersect($gejalaDiagnosaArr, $daftarGejalaArr);
-            $matchedCount = count($matchedSymptoms);
-            $matchingPercentage = ($matchedCount / $totalSymptoms) * 100;
-
-            // Memeriksa jika rule ini memiliki kecocokan gejala yang lebih baik dari sebelumnya
-            if ($matchedCount === $totalSymptoms) {
-                $matchedRule = $rule;
+        // Memeriksa keberadaan semua gejala dalam gejala_diagnosa dalam daftar gejala yang valid
+        foreach ($gejalaDiagnosaArr as $gejala) {
+            if (!$gejalas->contains('id', $gejala)) {
+                $gejalaValid = false;
                 break;
-            } elseif ($matchingPercentage > $bestMatchCount) {
-                $bestMatchCount = $matchingPercentage;
-                $bestMatchRule = $rule;
-            }
-
-            // Memeriksa jika perbedaan antara gejala pasien dan rule ini lebih kecil dari sebelumnya
-            $diff = count(array_diff($gejalaDiagnosaArr, $daftarGejalaArr));
-            if ($diff < $bestMatchDiff) {
-                $bestMatchDiff = $diff;
-                $closestRule = $rule;
             }
         }
 
-        // Jika tidak ada rule yang cocok, lakukan solusi penyakit dengan mengambil jawaban user terdekat pada rules
-        if (!$matchedRule) {
-            $matchedRule = $closestRule;
-        }
-    }
+        if ($gejalaValid) {
+            $bestMatchCount = 0; // Menyimpan jumlah gejala yang cocok terbanyak
+            $bestMatchRule = null; // Menyimpan rule dengan kecocokan terbaik
+            $bestMatchDiff = PHP_INT_MAX; // Menyimpan selisih terkecil dengan rule
+            $closestRule = null; // Menyimpan rule dengan selisih terkecil
 
-    return view('user.diagnosa.hasil_diagnosa', compact('diagnosa', 'gejalas', 'penyakits', 'rules', 'post_penyakit', 'matchedRule'));
+            foreach ($rules as $rule) {
+                $daftarGejalaArr = explode(',', $rule['daftar_gejala']);
+                $matchedSymptoms = array_intersect($gejalaDiagnosaArr, $daftarGejalaArr);
+                $matchedCount = count($matchedSymptoms);
+                $matchingPercentage = ($matchedCount / $totalSymptoms) * 100;
+
+                // Memeriksa jika rule ini memiliki kecocokan gejala yang lebih baik dari sebelumnya
+                if ($matchedCount === $totalSymptoms) {
+                    $matchedRule = $rule;
+                    break;
+                } elseif ($matchingPercentage > $bestMatchCount) {
+                    $bestMatchCount = $matchingPercentage;
+                    $bestMatchRule = $rule;
+                }
+
+                // Memeriksa jika perbedaan antara gejala pasien dan rule ini lebih kecil dari sebelumnya
+                $diff = count(array_diff($gejalaDiagnosaArr, $daftarGejalaArr));
+                if ($diff < $bestMatchDiff) {
+                    $bestMatchDiff = $diff;
+                    $closestRule = $rule;
+                }
+            }
+
+            // Jika tidak ada rule yang cocok, lakukan solusi penyakit dengan mengambil jawaban user terdekat pada rules
+            if (!$matchedRule) {
+                $matchedRule = $closestRule;
+            }
+        }
+
+        return view('user.diagnosa.hasil_diagnosa', compact('diagnosa', 'gejalas', 'penyakits', 'rules', 'post_penyakit', 'matchedRule'));
 }
-
-
-
-
-
-
 
     public function showPrintDiagnosa($id)
     {
@@ -148,59 +127,59 @@ class DiagnosaController extends Controller
         // $rules = Rule::with(['gejalaDiagnosa', 'penyakit'])->get();
 
         $diagnosa = Diagnosa::with(['user', 'penyakits'])->findOrFail($id);
-    $gejalaIds = explode(',', $diagnosa->gejala_diagnosa);
-    $gejalas = Gejala::whereIn('id', $gejalaIds)->get();
-    $penyakits = Penyakit::all();
-    $rules = Rule::with(['gejalaDiagnosa', 'penyakit'])->get();
-    $post_penyakit = LandingPagePostPenyakit::get();
+        $gejalaIds = explode(',', $diagnosa->gejala_diagnosa);
+        $gejalas = Gejala::whereIn('id', $gejalaIds)->get();
+        $penyakits = Penyakit::all();
+        $rules = Rule::with(['gejalaDiagnosa', 'penyakit'])->get();
+        $post_penyakit = LandingPagePostPenyakit::get();
 
-    $matchedRule = null;
-    $gejalaDiagnosaArr = explode(',', $diagnosa->gejala_diagnosa);
-    $gejalaValid = true;
-    $totalSymptoms = count($gejalaDiagnosaArr);
+        $matchedRule = null;
+        $gejalaDiagnosaArr = explode(',', $diagnosa->gejala_diagnosa);
+        $gejalaValid = true;
+        $totalSymptoms = count($gejalaDiagnosaArr);
 
-    // Memeriksa keberadaan semua gejala dalam gejala_diagnosa dalam daftar gejala yang valid
-    foreach ($gejalaDiagnosaArr as $gejala) {
-        if (!$gejalas->contains('id', $gejala)) {
-            $gejalaValid = false;
-            break;
-        }
-    }
-
-    if ($gejalaValid) {
-        $bestMatchCount = 0; // Menyimpan jumlah gejala yang cocok terbanyak
-        $bestMatchRule = null; // Menyimpan rule dengan kecocokan terbaik
-        $bestMatchDiff = PHP_INT_MAX; // Menyimpan selisih terkecil dengan rule
-        $closestRule = null; // Menyimpan rule dengan selisih terkecil
-
-        foreach ($rules as $rule) {
-            $daftarGejalaArr = explode(',', $rule['daftar_gejala']);
-            $matchedSymptoms = array_intersect($gejalaDiagnosaArr, $daftarGejalaArr);
-            $matchedCount = count($matchedSymptoms);
-            $matchingPercentage = ($matchedCount / $totalSymptoms) * 100;
-
-            // Memeriksa jika rule ini memiliki kecocokan gejala yang lebih baik dari sebelumnya
-            if ($matchedCount === $totalSymptoms) {
-                $matchedRule = $rule;
+        // Memeriksa keberadaan semua gejala dalam gejala_diagnosa dalam daftar gejala yang valid
+        foreach ($gejalaDiagnosaArr as $gejala) {
+            if (!$gejalas->contains('id', $gejala)) {
+                $gejalaValid = false;
                 break;
-            } elseif ($matchingPercentage > $bestMatchCount) {
-                $bestMatchCount = $matchingPercentage;
-                $bestMatchRule = $rule;
-            }
-
-            // Memeriksa jika perbedaan antara gejala pasien dan rule ini lebih kecil dari sebelumnya
-            $diff = count(array_diff($gejalaDiagnosaArr, $daftarGejalaArr));
-            if ($diff < $bestMatchDiff) {
-                $bestMatchDiff = $diff;
-                $closestRule = $rule;
             }
         }
 
-        // Jika tidak ada rule yang cocok, lakukan solusi penyakit dengan mengambil jawaban user terdekat pada rules
-        if (!$matchedRule) {
-            $matchedRule = $closestRule;
+        if ($gejalaValid) {
+            $bestMatchCount = 0; // Menyimpan jumlah gejala yang cocok terbanyak
+            $bestMatchRule = null; // Menyimpan rule dengan kecocokan terbaik
+            $bestMatchDiff = PHP_INT_MAX; // Menyimpan selisih terkecil dengan rule
+            $closestRule = null; // Menyimpan rule dengan selisih terkecil
+
+            foreach ($rules as $rule) {
+                $daftarGejalaArr = explode(',', $rule['daftar_gejala']);
+                $matchedSymptoms = array_intersect($gejalaDiagnosaArr, $daftarGejalaArr);
+                $matchedCount = count($matchedSymptoms);
+                $matchingPercentage = ($matchedCount / $totalSymptoms) * 100;
+
+                // Memeriksa jika rule ini memiliki kecocokan gejala yang lebih baik dari sebelumnya
+                if ($matchedCount === $totalSymptoms) {
+                    $matchedRule = $rule;
+                    break;
+                } elseif ($matchingPercentage > $bestMatchCount) {
+                    $bestMatchCount = $matchingPercentage;
+                    $bestMatchRule = $rule;
+                }
+
+                // Memeriksa jika perbedaan antara gejala pasien dan rule ini lebih kecil dari sebelumnya
+                $diff = count(array_diff($gejalaDiagnosaArr, $daftarGejalaArr));
+                if ($diff < $bestMatchDiff) {
+                    $bestMatchDiff = $diff;
+                    $closestRule = $rule;
+                }
+            }
+
+            // Jika tidak ada rule yang cocok, lakukan solusi penyakit dengan mengambil jawaban user terdekat pada rules
+            if (!$matchedRule) {
+                $matchedRule = $closestRule;
+            }
         }
-    }
 
         // Generate PDF
         $pdf = new Dompdf();

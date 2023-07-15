@@ -34,19 +34,23 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="password"
-                                                class="col-form-label text-md-end">{{ __('Password') }}</label>
-
-                                            <input id="password" type="password"
-                                                class="form-control @error('password') is-invalid @enderror" name="password"
-                                                required autocomplete="current-password">
-
+                                            <label for="password" class="col-form-label text-md-end">{{ __('Password') }}</label>
+                                        
+                                            <div class="input-group">
+                                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
+                                                    name="password" required autocomplete="current-password">
+                                                <button type="button" id="togglePassword" class="btn btn-outline-secondary">
+                                                    <i id="toggleIcon" class="bi bi-eye-slash"></i>
+                                                </button>
+                                            </div>
+                                        
                                             @error('password')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
                                         </div>
+                                        
 
                                         <div class="row mb-0">
                                             <div class="d-grid gap-2 mt-3">
@@ -71,6 +75,26 @@
             </div>
         </section>
     </main>
+
+    @push('js')
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#password');
+        const toggleIcon = document.querySelector('#toggleIcon');
+    
+        togglePassword.addEventListener('click', function() {
+            if (password.type === 'password') {
+                password.type = 'text';
+                toggleIcon.classList.remove('bi bi-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            } else {
+                password.type = 'password';
+                toggleIcon.classList.remove('bi-eye');
+                toggleIcon.classList.add('bi bi-eye-slash');
+            }
+        });
+    </script>
+    @endpush
 
 @endsection
 {{-- <div class="card-body">
