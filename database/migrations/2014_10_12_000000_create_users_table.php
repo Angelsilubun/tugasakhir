@@ -22,7 +22,7 @@ return new class extends Migration
             // $table->string('jenis_kelamin')->nullable();
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan'])->nullable();
             $table->string('alamat')->nullable();
-            $table->string('umur', 3)->nullable();
+            $table->string('umur')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
