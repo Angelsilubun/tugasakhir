@@ -23,12 +23,27 @@
                                                     value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                                                 @error('name')
+                                                    <div class="alert alert-danger mt-2">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        {{-- <div class="mb-3 row">
+                                            <label for="staticEmail"
+                                                class="col-sm-2 col-form-label">{{ __('Nama') }}</label>
+                                            <div class="col-sm-9">
+                                                <input id="name" type="name"
+                                                    class="form-control @error('name') is-invalid @enderror" name="name"
+                                                    value="{{ old('name') }}" required autocomplete="name" autofocus>
+
+                                                @error('name')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="mb-3 row">
                                             <label for="staticEmail"
                                                 class="col-sm-2 col-form-label">{{ __('Email') }}</label>
@@ -38,9 +53,9 @@
                                                     value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                                                 @error('email')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
+                                                    <div class="alert alert-danger mt-2">
+                                                        {{ $message }}
+                                                    </div>
                                                 @enderror
                                             </div>
                                         </div>
@@ -50,12 +65,12 @@
                                             <div class="col-sm-9">
                                                 <input id="umur" type="umur"
                                                     class="form-control @error('umur') is-invalid @enderror" name="umur"
-                                                    value="{{ old('umur') }}" required autocomplete="umur">
+                                                    value="{{ old('umur') }}" required autocomplete="umur" autofocus>
 
                                                 @error('umur')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
+                                                    <div class="alert alert-danger mt-2">
+                                                        {{ $message }}
+                                                    </div>
                                                 @enderror
                                             </div>
                                         </div>
@@ -64,12 +79,12 @@
                                                 class="col-sm-2 col-form-label">{{ __('Alamat') }}</label>
                                             <div class="col-sm-9">
                                                 <textarea type="alamat" class="form-control @error('alamat') is-invalid @enderror" name="alamat"
-                                                    value="{{ old('alamat') }}" required autocomplete="alamat" id="alamat" rows="3"></textarea>
+                                                    value="{{ old('alamat') }}" required autocomplete="alamat" id="alamat" rows="3" autofocus></textarea>
 
                                                 @error('alamat')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
+                                                    <div class="alert alert-danger mt-2">
+                                                        {{ $message }}
+                                                    </div>
                                                 @enderror
                                             </div>
                                         </div>
@@ -80,7 +95,7 @@
                                                 class="col-sm-4 col-form-label">{{ __('Jenis Kelamin') }}</label>
                                             <div class="col-sm-8">
                                                 <select name="jenis_kelamin" class="form-select"
-                                                    aria-label="Default select example">
+                                                    aria-label="Default select example" required autocomplete="jenis_kelamin" autofocus>
                                                     <option value="" selected>- Pilih Jenis Kelamin -</option>
                                                     <option value="Perempuan">Perempuan</option>
                                                     <option value="Laki-laki">Laki-laki</option>
@@ -116,16 +131,16 @@
                                                 <div class="input-group">
                                                     <input id="password" type="password"
                                                         class="form-control @error('password') is-invalid @enderror"
-                                                        name="password" required autocomplete="current-password">
+                                                        name="password" required autocomplete="current-password" autofocus>
                                                     <button type="button" id="togglePassword"
                                                         class="btn btn-outline-secondary">
                                                         <i id="toggleIcon" class="bi bi-eye-slash"></i>
                                                     </button>
                                                 </div>
                                                 @error('password')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
+                                                    <div class="alert alert-danger mt-2">
+                                                        {{ $message }}
+                                                    </div>
                                                 @enderror
                                             </div>
                                         </div>
@@ -147,7 +162,7 @@
                                                 <div class="input-group">
                                                     <input id="password-confirm" type="password"
                                                         class="form-control @error('password') is-invalid @enderror"
-                                                        name="password_confirmation" required autocomplete="new-password">
+                                                        name="password_confirmation" required autocomplete="new-password" autofocus>
                                                     <button type="button" id="toggleConfirmPassword"
                                                         class="btn btn-outline-secondary">
                                                         <i id="toggleConfirmIcon" class="bi bi-eye-slash"></i>

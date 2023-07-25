@@ -3,13 +3,13 @@
 @section('title', 'Hasil')
 
 @section('container')
-<style>
-    .deskripsi-penyakit p {
-        padding: 0;
-        margin: 0;
-        display: inline
-    }
-</style>
+    <style>
+        .deskripsi-penyakit p {
+            padding: 0;
+            margin: 0;
+            display: inline
+        }
+    </style>
     <main id="main">
         <section id="contact" class="contact mt-4">
             <div class="container">
@@ -90,16 +90,16 @@
                                     $matchedSymptoms = array_intersect($gejalaDiagnosaArr, $daftarGejalaArr);
                                     return count($matchedSymptoms);
                                 }
-
+                                
                                 function calculateMatchingPercentage($matchedSymptoms, $totalSymptoms)
                                 {
                                     return round(($matchedSymptoms / $totalSymptoms) * 100, 2);
                                 }
-
+                                
                                 $gejalaDiagnosaArr = explode(',', $diagnosa->gejala_diagnosa);
                                 $gejalaValid = true;
                                 $totalSymptoms = count($gejalaDiagnosaArr);
-
+                                
                                 // Memeriksa keberadaan semua gejala dalam gejala_diagnosa dalam daftar gejala yang valid
                                 foreach ($gejalaDiagnosaArr as $gejala) {
                                     if (!$gejalas->contains('id', $gejala)) {
@@ -107,21 +107,21 @@
                                         break;
                                     }
                                 }
-
+                                
                                 $matchedRule = null;
-
+                                
                                 if ($gejalaValid) {
                                     $bestMatchCount = 0; // Menyimpan jumlah gejala yang cocok terbanyak
                                     $bestMatchRule = null; // Menyimpan rule dengan kecocokan terbaik
                                     $bestMatchDiff = PHP_INT_MAX; // Menyimpan selisih terkecil dengan rule
                                     $closestRule = null; // Menyimpan rule dengan selisih terkecil
-
+                                
                                     foreach ($rules as $rule) {
                                         $daftarGejalaArr = explode(',', $rule['daftar_gejala']);
                                         $matchedSymptoms = array_intersect($gejalaDiagnosaArr, $daftarGejalaArr);
                                         $matchedCount = count($matchedSymptoms);
                                         $matchingPercentage = ($matchedCount / $totalSymptoms) * 100;
-
+                                
                                         // Memeriksa jika rule ini memiliki kecocokan gejala yang lebih baik dari sebelumnya
                                         if ($matchedCount === $totalSymptoms) {
                                             $matchedRule = $rule;
@@ -130,7 +130,7 @@
                                             $bestMatchCount = $matchingPercentage;
                                             $bestMatchRule = $rule;
                                         }
-
+                                
                                         // Memeriksa jika perbedaan antara gejala pasien dan rule ini lebih kecil dari sebelumnya
                                         $diff = count(array_diff($gejalaDiagnosaArr, $daftarGejalaArr));
                                         if ($diff < $bestMatchDiff) {
@@ -138,7 +138,7 @@
                                             $closestRule = $rule;
                                         }
                                     }
-
+                                
                                     // Jika tidak ada rule yang cocok, lakukan solusi penyakit dengan mengambil jawaban user terdekat pada rules
                                     if (!$matchedRule) {
                                         $matchedRule = $closestRule;
@@ -182,7 +182,7 @@
                                         <strong>Berikut beberapa artikel terkait:</strong>
                                     </h5>
 
-                                    @if ($matchedRule && count($post_penyakit) > 0)
+                                    {{-- @if ($matchedRule && count($post_penyakit) > 0)
                                         <div class="row row-cols-1 row-cols-md-3 g-4 my-3"
                                             style="max-height: 480px; overflow-y: auto;" data-aos="fade-up">
                                             @php
@@ -249,6 +249,75 @@
                                                 <div class="alert alert-warning" role="alert">
                                                     Artikel belum dibuat untuk penyakit ini.
                                                 </div>
+                                            @endif
+                                        </div>
+                                    @else
+                                        <div class="alert alert-warning" role="alert">
+                                            Artikel belum dibuat untuk penyakit ini.
+                                        </div>
+                                    @endif --}}
+                                    @if ($matchedRule && count($post_penyakit) > 0)
+                                        <div class="row row-cols-1 row-cols-md-3 g-4 my-3"
+                                            style="max-height: 480px; overflow-y: auto;" data-aos="fade-up">
+                                            @php
+                                                $matchedArticles = $post_penyakit->where('id_penyakit', $matchedRule->penyakit->id);
+                                            @endphp
+
+                                            @if ($matchedArticles->isEmpty())
+                                                <div class="alert alert-warning" role="alert">
+                                                    Artikel belum dibuat untuk penyakit ini.
+                                                </div>
+                                            @else
+                                                @foreach ($matchedArticles as $item)
+                                                    <div class="col">
+                                                        <div class="card h-100">
+                                                            <a href="{{ route('landingPageHome.showPostPenyakit', $item->slug_post_penyakit) }}"
+                                                                class="text-black fw-bold">
+                                                                <img src="{{ Storage::url($item->image_post_penyakit) }}"
+                                                                    class="card-img-top" alt="{{ $item->id }}">
+                                                            </a>
+                                                            <div class="card-body d-flex flex-column">
+                                                                <h5 class="card-title">
+                                                                    <a href="{{ route('landingPageHome.showPostPenyakit', $item->slug_post_penyakit) }}"
+                                                                        class="text-black fw-bold">{{ $item->title_post_penyakit }}</a>
+                                                                </h5>
+                                                                <p class="card-tags">
+                                                                    @php
+                                                                        $tags = json_decode($item->tags_post_penyakit, true);
+                                                                    @endphp
+
+                                                                    @if (is_array($tags))
+                                                                        @foreach ($tags as $tag)
+                                                                            <span
+                                                                                class="badge bg-primary">{{ $tag['value'] }}</span>
+                                                                        @endforeach
+                                                                    @endif
+                                                                </p>
+                                                                <p class="card-text flex-grow-1"
+                                                                    style="text-align: justify;">
+                                                                    {!! Str::limit($item->description_post_penyakit, 80, '...') !!}
+                                                                </p>
+                                                                <div
+                                                                    class="d-flex align-items-center mt-auto justify-content-between">
+                                                                    <div>
+                                                                        <p class="text-muted mb-1"><i
+                                                                                class="bi bi-person-fill"></i>
+                                                                            {{ $item->user->name }}</p>
+                                                                        <p class="text-muted"><i class="bi bi-clock"></i>
+                                                                            {{ \Carbon\Carbon::parse($item->created_at)->format('d-m-Y') }}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div>
+                                                                        <a href="{{ route('landingPageHome.showPostPenyakit', $item->slug_post_penyakit) }}"
+                                                                            class="btn btn-primary">
+                                                                            <i class="bi bi-eye"></i> Lihat
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
                                             @endif
                                         </div>
                                     @else

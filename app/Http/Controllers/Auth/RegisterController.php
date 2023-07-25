@@ -48,16 +48,33 @@ class RegisterController extends Controller
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'umur' => ['required'],
-            'alamat' => ['required', 'string', 'min:10'],
-            'jenis_kelamin' => ['required', 'string']
-        ]);
-    }
+{
+    return Validator::make($data, [
+        'name' => ['required', 'string', 'max:35'],
+        'email' => ['required', 'string', 'email', 'max:75', 'unique:users'],
+        'password' => ['required', 'string', 'min:8', 'confirmed'],
+        'umur' => ['required', 'numeric'],
+        'alamat' => ['required', 'string', 'min:5'],
+        'jenis_kelamin' => ['required', 'string']
+    ], [
+        'name.required' => 'Nama wajib diisi.',
+        'name.max' => 'Nama maksimal 35 huruf.',
+        'email.required' => 'Email wajib diisi.',
+        'email.email' => 'Format email tidak valid.',
+        'email.max' => 'Email maksimal 75 huruf.',
+        'email.unique' => 'Email sudah digunakan, harap gunakan email lain.',
+        'password.required' => 'Password wajib diisi.',
+        'password.min' => 'Password minimal 8 karakter.',
+        'password.confirmed' => 'Konfirmasi password tidak sesuai.',
+        'umur.required' => 'Umur wajib diisi.',
+        'umur.numeric' => 'Umur harus berupa angka.',
+        'alamat.required' => 'Alamat wajib diisi.',
+        'alamat.min' => 'Harap isi dengan alamat lengkap.',
+        'jenis_kelamin.required' => 'Jenis Kelamin wajib diisi.'
+    ]);
+}
+
+
 
     /**
      * Create a new user instance after a valid registration.

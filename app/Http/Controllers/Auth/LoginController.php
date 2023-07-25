@@ -44,10 +44,24 @@ class LoginController extends Controller
     {
         $input = $request->all();
 
+        // $this->validate($request, [
+        //     'email' => 'required|email',
+        //     'password' => 'required|',
+        // ]);
+
         $this->validate($request, [
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:8|confirmed',
+        ],
+        [
+            'email.required' => 'Email wajib diisi',
+            'email.email' => 'Format email tidak valid',
+            'email.unique' => 'Email sudah digunakan, harap gunakan email lain',
+            'password.required' => 'Password wajib diisi',
+            'password.min' => 'Password minimal 8 karakter',
+            'password.confirmed' => 'Konfirmasi password tidak sesuai'
+        ]
+    );
 
         // if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password'])))
         // {
