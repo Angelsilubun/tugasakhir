@@ -50,16 +50,14 @@ class LoginController extends Controller
         // ]);
 
         $this->validate($request, [
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:8|confirmed',
+            'email' => 'required|email',
+            'password' => 'required|min:8',
         ],
         [
             'email.required' => 'Email wajib diisi',
-            'email.email' => 'Format email tidak valid',
-            'email.unique' => 'Email sudah digunakan, harap gunakan email lain',
+            'email.email' => 'Email yang anda masukan salah',
             'password.required' => 'Password wajib diisi',
             'password.min' => 'Password minimal 8 karakter',
-            'password.confirmed' => 'Konfirmasi password tidak sesuai'
         ]
     );
 
@@ -73,6 +71,8 @@ class LoginController extends Controller
         // } else {
         //     return redirect()->route('login')->with('error', 'Email address and password are wrong');
         // }
+    
+
         if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password'])))
         {
             if(auth()->user()->role == 'admin'){
