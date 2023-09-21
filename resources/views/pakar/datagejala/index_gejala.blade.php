@@ -60,6 +60,7 @@
                                                 <th scope="col" class="text-nowrap">No</th>
                                                 <th scope="col" class="text-nowrap">Kode Gejala</th>
                                                 <th scope="col" class="text-nowrap">Nama Gejala</th>
+                                                <th scope="col" class="text-nowrap">Deskripsi Gejala</th>
                                                 <th scope="col" class="text-nowrap w-25">Action</th>
                                             </tr>
                                         </thead>
@@ -69,6 +70,7 @@
                                                     <th scope="row">{{ $loop->iteration }}</th>
                                                     <td>{{ $gejala->kode_gejala }}</td>
                                                     <td>{!! \Illuminate\Support\Str::limit($gejala->nama_gejala, 50) !!}</td>
+                                                    <td>{!! \Illuminate\Support\Str::limit($gejala->deskripsi, 50) !!}</td>
                                                     <td class="d-flex">
                                                         <div class="btn-group" role="group">
                                                             <form onsubmit="return confirm('Apakah anda yakin?');"
@@ -79,6 +81,12 @@
                                                                     data-bs-toggle="modal"
                                                                     href="#edit_gejala{{ $gejala->id }}" nowrap>
                                                                     <i class="bi bi-pencil-square"></i>
+                                                                </button>
+                                                                <button type="button"
+                                                                    class="btn btn-primary text-light btn-sm" style="background-color: #009999"
+                                                                    data-bs-toggle="modal"
+                                                                    href="#show_gejala{{ $gejala->id }}" nowrap>
+                                                                    <i class="bi bi-eye"></i>
                                                                 </button>
                                                                 @csrf
                                                                 @method('DELETE')
@@ -100,6 +108,7 @@
                 </div>
             </section>
 
+            @include('pakar.datagejala.show_gejala')
             @include('pakar.datagejala.edit')
 
             <!-- Modal -->
@@ -124,12 +133,28 @@
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Nama gejala</label>
+                                        <textarea class="form-control @error('nama_gejala') is-invalid @enderror" name="nama_gejala" rows="3"
+                                            placeholder="Enter nama gejala" required>{{ old('nama_gejala') }}</textarea>
+                                        @error('nama_gejala')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    {{-- <div class="col-md-12">
                                         <label class="form-label">Nama gejala</label>
                                         <input type="nama" name="nama_gejala"
                                             class="form-control @error('nama_gejala') is-invalid @enderror"
                                             value="{{ old('nama_gejala') }}" required>
                                         @error('nama_gejala')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div> --}}
+                                    <div class="mb-3">
+                                        <label class="form-label">Deskripsi Gejala</label>
+                                        <textarea class="form-control @error('deskripsi') is-invalid @enderror" name="deskripsi" rows="3"
+                                            placeholder="Enter deskripsi" required>{{ old('deskripsi') }}</textarea>
+                                        @error('deskripsi')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>

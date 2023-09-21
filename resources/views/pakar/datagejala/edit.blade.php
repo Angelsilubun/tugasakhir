@@ -21,12 +21,37 @@
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-md-12">
+                            {{-- <div class="col-md-12">
                                 <label class="form-label">Nama Gejala</label>
                                 <input type="nama" name="nama_gejala"
                                     class="form-control @error('nama_gejala') is-invalide @enderror"
                                     value="{{ old('nama_gejala') }}{{ $gejala->nama_gejala }}" required>
                                 @error('nama_gejala')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </div> --}}
+                            <div class="mb-3">
+                                <label class="form-label">Nama gejala</label>
+                                <textarea class="form-control @error('nama_gejala') is-invalid @enderror" name="nama_gejala" rows="3"
+                                    placeholder="Enter nama gejala" required>{{ $gejala->nama_gejala }}</textarea>
+                                @error('nama_gejala')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            {{-- <div class="col-md-12">
+                                <label class="form-label">Nama gejala</label>
+                                <input type="nama" name="nama_gejala"
+                                    class="form-control @error('nama_gejala') is-invalid @enderror"
+                                    value="{{ old('nama_gejala') }}" required>
+                                @error('nama_gejala')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </div> --}}
+                            <div class="mb-3">
+                                <label class="form-label">Deskripsi Gejala</label>
+                                <textarea class="form-control @error('deskripsi') is-invalid @enderror" name="deskripsi" rows="3"
+                                    placeholder="Enter deskripsi" required>{{ $gejala->deskripsi }}</textarea>
+                                @error('deskripsi')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                             </div>

@@ -38,18 +38,22 @@ class DiagnosaSeeder extends Seeder
             [
                 'kode_gejala' => 'G001',
                 'nama_gejala' => 'pada payudara terdapat tumor berukuran diameter > 5cm',
+                'deskripsi' => 'Pada payudara terdapat tumor yang memiliki ukuran diameter lebih besar dari 5 cm. Tumor ini dapat menjadi gejala dari berbagai masalah kesehatan, termasuk kemungkinan kanker payudara',
             ],
             [
                 'kode_gejala' => 'G002',
                 'nama_gejala' => 'terdapat metastasis ke kelenjar getah bening aksilla yang masih dapat digerakan',
+                'deskripsi' => 'Bahwa terdapat metastasis (penyebaran) kanker dari payudara ke kelenjar getah bening aksila (ketiak) yang masih dapat digerakkan. Metastasis ke kelenjar getah bening aksila menandakan bahwa kanker telah mulai menyebar ke bagian tubuh yang lebih dekat dari tumor asalnya.'
             ],
             [
                 'kode_gejala' => 'G003',
                 'nama_gejala' => 'terjadi pembengkakan pada payudara',
+                'deskripsi' => 'Pembengkakan pada payudara bisa menjadi gejala dari berbagai kondisi medis, termasuk kanker payudara. Namun, perlu diingat bahwa pembengkakan payudara tidak selalu menandakan kanker.'
             ],
             [
                 'kode_gejala' => 'G004',
                 'nama_gejala' => 'terdapat metastasis ke kelenjar getah bening yang sulit digerakan',
+                'deskripsi' => 'Metastasis ke kelenjar getah bening yang sulit digerakan mengindikasikan bahwa kanker payudara telah menyebar dari tumor asalnya ke kelenjar getah bening di area tersebut. Kelenjar getah bening yang sulit digerakkan menunjukkan adanya perluasan kanker yang lebih lanjut, dan ini bisa menjadi tanda bahwa kanker telah mencapai tahap lanjut.'
             ],
         ];
 

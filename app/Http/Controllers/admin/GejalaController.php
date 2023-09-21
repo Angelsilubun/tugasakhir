@@ -22,15 +22,18 @@ class GejalaController extends Controller
         $this->validate($request, [
             'kode_gejala' => 'required',
             'nama_gejala' => 'required',
+            'deskripsi' => 'required',
         ],
         [
             'kode_gejala.required' => 'Kode gejala tidak boleh kosong.',
             'nama_gejala.required' => 'Nama gejala tidak boleh kosong.',
+            'deskripsi.required' => 'Nama gejala tidak boleh kosong.',
         ]);
 
         Gejala::create([
             'kode_gejala' => $request->kode_gejala,
-            'nama_gejala' => $request->nama_gejala
+            'nama_gejala' => $request->nama_gejala,
+            'deskripsi' => $request->deskripsi
         ]);
 
         if ($request) {
@@ -52,17 +55,20 @@ class GejalaController extends Controller
         $this->validate($request, [
             'kode_gejala' => 'required',
             'nama_gejala' => 'required',
+            'deskripsi' => 'required',
         ],
         [
             'kode_gejala.required' => 'Kode gejala tidak boleh kosong.',
             'nama_gejala.required' => 'Nama gejala tidak boleh kosong.',
+            'deskripsi.required' => 'Deskripsi tidak boleh kosong.',
         ]);
 
         $data_gejala = Gejala::findOrFail($id);
 
         $data_gejala->update([
             'kode_gejala' => $request->kode_gejala,
-            'nama_gejala' => $request->nama_gejala
+            'nama_gejala' => $request->nama_gejala,
+            'deskripsi' => $request->deskripsi,
         ]);
 
         if ($request) {

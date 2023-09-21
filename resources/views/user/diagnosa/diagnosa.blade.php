@@ -8,7 +8,8 @@
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
                     <h2>Diagnosa</h2>
-                    <p>Membantu pengguna mendapatkan informasi awal tentang penyakit atau kondisi kesehatan yang mungkin dialami</p>
+                    <p>Membantu pengguna mendapatkan informasi awal tentang penyakit atau kondisi kesehatan yang mungkin
+                        dialami</p>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
@@ -40,11 +41,12 @@
                                             enctype="multipart/form-data">
                                             @csrf
                                             <div class="table-responsive" style="overflow: auto;">
-                                                <table class="table table-hover w-100">
+                                                <table class="table table-hover w-100 align-middle">
                                                     <thead>
                                                         <tr>
                                                             <th class="text-nowrap">No</th>
                                                             <th class="text-nowrap w-75">Gejala</th>
+                                                            <th class="text-nowrap w-75">Deskripsi Gejala</th>
                                                             <th class="text-nowrap w-25">Pilih Kondisi</th>
                                                         </tr>
                                                     </thead>
@@ -53,6 +55,17 @@
                                                             <tr>
                                                                 <th scope="row">{{ $loop->iteration }}</th>
                                                                 <td>Apakah Anda mengalami gejala {{ $item->nama_gejala }}?</td>
+                                                                <td>
+                                                                    <div class="d-grid gap-2 col-6 justify-content-center">
+                                                                        <button type="button"
+                                                                            class="btn btn-primary text-light btn-sm"
+                                                                            style="background-color: #009999"
+                                                                            data-bs-toggle="modal"
+                                                                            href="#show_gejala{{ $item->id }}" nowrap>
+                                                                            <i class="bi bi-exclamation-circle"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </td>
                                                                 <td class="form-group">
                                                                     <div class="pretty p-icon p-curve p-tada">
                                                                         <input class="form-check-input" type="checkbox"
@@ -73,7 +86,8 @@
                                                 </table>
                                             </div>
                                             <div class="mt-3 text-start">
-                                                <button class="btn" style="background-color:#ff6781; color:white">Diagnosa Sekarang</button>
+                                                <button class="btn" style="background-color:#ff6781; color:white">Diagnosa
+                                                    Sekarang</button>
                                             </div>
                                         </form>
                                     </div>
@@ -86,6 +100,7 @@
                 </div>
             </div>
         </section>
+        @include('user.diagnosa.show_gej')
     </main>
 
 

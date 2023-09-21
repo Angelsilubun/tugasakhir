@@ -62,22 +62,34 @@
                             </h5>
                             <hr>
 
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">No</th>
-                                        <th scope="col">Gejala</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($gejalas as $gejala)
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle">
+                                    <thead>
                                         <tr>
-                                            <th scope="row">{{ $loop->iteration }}</th>
-                                            <td>{{ $gejala->kode_gejala }} - {{ $gejala->nama_gejala }}</td>
+                                            <th scope="col">No</th>
+                                            <th scope="col">Gejala</th>
+                                            <th scope="col">Deskripsi Gejala</th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($gejalas as $gejala)
+                                            <tr>
+                                                <th scope="row">{{ $loop->iteration }}</th>
+                                                <td>{{ $gejala->kode_gejala }} - {{ $gejala->nama_gejala }}</td>
+                                                <td>
+                                                    <div class="d-grid gap-2 col-6 justify-content-center">
+                                                        <button type="button" class="btn btn-primary text-light btn-sm"
+                                                            style="background-color: #009999" data-bs-toggle="modal"
+                                                            href="#show_gejala{{ $gejala->id }}" nowrap>
+                                                            <i class="bi bi-exclamation-circle"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
 
                             <h5 class="mt-5">
                                 <strong>HASIL KONSULTASI</strong>
@@ -148,11 +160,17 @@
 
                             @if ($matchingPercentage === 0)
                                 <div class="alert alert-info" role="alert">
-                                    <p>Tidak ditemukan kesesuaian dengan peraturan sistem berdasarkan gejala yang Anda
+                                    {{-- <p>Tidak ditemukan kesesuaian dengan peraturan sistem berdasarkan gejala yang Anda
                                         sampaikan.</p>
                                     <p>Mohon perhatikan bahwa hasil ini tidak menyingkirkan kemungkinan adanya kondisi
                                         penyakit. Untuk informasi lebih lanjut, sebaiknya Anda berkonsultasi dengan dokter
-                                        atau tenaga medis terpercaya.</p>
+                                        atau tenaga medis terpercaya.</p> --}}
+                                    <p>Mohon maaf, tetapi gejala yang anda sampaikan tidak sesuai dengan aturan sistem
+                                        kanker payudara.</p>
+                                    <p>Namun, penting untuk diingat bahwa hasil ini tidak dapat sepenuhnya menyingkirkan
+                                        kemungkinan adanya kondisi penyakit lain.
+                                        Untuk informasi lebih lanjut dan penanganan yang tepat, sebaiknya anda berkonsultasi
+                                        dengan dokter atau tenaga medis terpercaya.
                                 </div>
                             @elseif ($matchedRule)
                                 <div class="alert alert-light shadow" role="alert">
@@ -322,14 +340,16 @@
                                         </div>
                                     @else
                                         <div class="alert alert-warning" role="alert">
-                                            Artikel belum dibuat untuk penyakit ini.
+                                            Tidak ada artikel mengenai penyakit ini
                                         </div>
                                     @endif
 
                                 </div>
                             @else
                                 <div class="alert alert-warning" role="alert">
-                                    Tidak ada aturan yang cocok dengan gejala yang Anda berikan.
+                                    Tidak ditemukan kesesuaian dengan peraturan sistem berdasarkan gejala yang Anda
+                                    sampaikan. Untuk informasi lebih lanjut, sebaiknya Anda berkonsultasi dengan dokter
+                                    atau tenaga medis terpercaya.
                                 </div>
                             @endif
                             <div class="mt-3 text-center">
@@ -344,6 +364,7 @@
                 </div>
             </div>
         </section>
+        @include('user.diagnosa.show_gej')
     </main>
 
     @push('style')

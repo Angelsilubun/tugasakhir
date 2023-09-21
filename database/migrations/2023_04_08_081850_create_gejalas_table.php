@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('kode_gejala', 5);
             $table->string('nama_gejala');
+            $table->longtext('deskripsi');
             $table->timestamps();
         });
     }
