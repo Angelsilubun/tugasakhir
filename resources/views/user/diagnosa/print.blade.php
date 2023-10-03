@@ -236,7 +236,7 @@
                                 <hr>
                                 <div class="">
                                     <p><b>Cara Penanganan:</b></p>
-                                    <p style="text-align: justify;">{{ $matchedRule->penanganan }}</p>
+                                    <p style="text-align: justify;">{!! $matchedRule->penanganan !!}</p>
                                 </div>
 
 
